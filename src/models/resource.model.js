@@ -7,13 +7,12 @@ const ResourceSchema = mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["hospital", "food center", "shelter"],
+    enum: ["hospital", "food", "shelter"],
     required: true,
   },
   location: {
     type: { type: String, default: "Point" },
     coordinates: { type: [Number], required: true }, // [longitude, latitude]
-    index: true,
   },
   availability: {
     type: String,
@@ -27,7 +26,7 @@ const ResourceSchema = mongoose.Schema({
   },
 });
 
-// ResourceSchema.index({ location: "2dsphere" }); // Index for geospatial queries
+ResourceSchema.index({ location: "2dsphere" }); // Index for geospatial queries
 
 const Resource = mongoose.model("Resource", ResourceSchema);
 
