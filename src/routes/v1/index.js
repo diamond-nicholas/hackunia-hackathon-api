@@ -1,6 +1,8 @@
 const express = require("express");
 const authRoute = require("./auth.route");
 const resourceRoute = require("./resource.route");
+const reportRoute = require("./report.route");
+const routePlanRoute = require("./routePlan.route");
 
 const router = express.Router();
 
@@ -12,6 +14,14 @@ const defaultRoutes = [
   {
     path: "/resource",
     route: resourceRoute,
+  },
+  {
+    path: "/report",
+    route: reportRoute,
+  },
+  {
+    path: "/route-plan",
+    route: routePlanRoute,
   },
 ];
 

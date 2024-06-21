@@ -3,6 +3,7 @@ const helmet = require("helmet");
 const xss = require("xss-clean");
 const cors = require("cors");
 const httpStatus = require("http-status");
+const http = require("http");
 const cookieParser = require("cookie-parser");
 const config = require("./src/config/config");
 const compression = require("compression");
@@ -13,8 +14,12 @@ const { errorConverter, errorHandler } = require("./src/middlewares/error");
 const mongoose = require("mongoose");
 const mongoSanitize = require("express-mongo-sanitize");
 const bodyParser = require("body-parser");
+const socketIo = require("socket.io");
+const { setupSocket } = require("./src/config/socket");
 
-const app = express();
+let app = express();
+let server = http.createServer(app);
+const io = socketIo(server);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -53,6 +58,8 @@ app.use("/api/v1", routes);
 
 app.use(errorConverter);
 app.use(errorHandler);
+
+setupSocket(io);
 
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info("Connected to MongoDB");

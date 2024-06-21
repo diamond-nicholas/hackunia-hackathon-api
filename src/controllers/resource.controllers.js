@@ -19,7 +19,7 @@ const createResource = catchAsync(async (req, res) => {
     );
     res.status(httpStatus.CREATED).send({
       message: "Resource added",
-      data: resource,
+      data: "",
     });
   } catch (error) {
     res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ error: error.message });

@@ -12,7 +12,7 @@ const ResourceSchema = mongoose.Schema({
   },
   location: {
     type: { type: String, default: "Point" },
-    coordinates: { type: [Number], required: true }, // [longitude, latitude]
+    coordinates: { type: [Number], required: true },
   },
   availability: {
     type: String,
