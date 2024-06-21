@@ -1,7 +1,7 @@
 const httpStatus = require("http-status");
 const tokenService = require("./token.service");
 const userService = require("./user.service");
-const { Token, User, Resource, Report } = require("../models");
+const { Token, User, Resource, Report, RoutePlan } = require("../models");
 const ApiError = require("../utils/ApiError");
 const { tokenTypes } = require("../config/token");
 const logger = require("../config/logger");
@@ -111,6 +111,15 @@ const setRoute = async (routeBody, currentUser) => {
     const durationInHr = minDistanceInKm / walkingSpeedKmPerHour;
 
     if (nearestResource) {
+      const newRoute = await RoutePlan.create({
+        user: currentUser._id,
+        destination: nearestResource._id,
+        currentLocation,
+        route: getRoute(previous, nearestResource._id.toString()),
+        distanceInKm: minDistanceInKm,
+        timeInHours: durationInHr,
+        alienSightingsAvoided,
+      });
       return {
         route: getRoute(previous, nearestResource._id.toString()),
         distanceInKm: minDistanceInKm,
@@ -118,6 +127,7 @@ const setRoute = async (routeBody, currentUser) => {
         timeInHours: durationInHr,
         currentLocation: currentLocation,
         alienSightingsAvoided: alienSightingsAvoided,
+        _id: newRoute._id,
       };
     } else {
       throw new ApiError(
