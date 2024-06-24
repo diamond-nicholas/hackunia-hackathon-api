@@ -22,6 +22,32 @@ const createReport = catchAsync(async (req, res) => {
   }
 });
 
+const updateReports = catchAsync(async (req, res) => {
+  try {
+    const report = await reportService.updateReports(req.body, req.user);
+    res.status(httpStatus.OK).send({
+      message: "",
+      data: report,
+    });
+  } catch (error) {
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ error: error.message });
+  }
+});
+
+const getReports = catchAsync(async (req, res) => {
+  try {
+    const report = await reportService.getReports(req.user);
+    res.status(httpStatus.CREATED).send({
+      message: "",
+      data: report,
+    });
+  } catch (error) {
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ error: error.message });
+  }
+});
+
 module.exports = {
   createReport,
+  getReports,
+  updateReports,
 };

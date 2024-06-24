@@ -12,4 +12,18 @@ router.post(
   reportController.createReport
 );
 
+router.get(
+  "/",
+  isAuthenticated,
+  validate(reportValidation.getReport),
+  reportController.getReports
+);
+
+router.patch(
+  "/",
+  isAuthenticated,
+  validate(reportValidation.updateReports),
+  reportController.updateReports
+);
+
 module.exports = router;

@@ -3,6 +3,7 @@ const authRoute = require("./auth.route");
 const resourceRoute = require("./resource.route");
 const reportRoute = require("./report.route");
 const routePlanRoute = require("./routePlan.route");
+const mapViewRoute = require("./mapview.route");
 
 const router = express.Router();
 
@@ -22,6 +23,10 @@ const defaultRoutes = [
   {
     path: "/route-plan",
     route: routePlanRoute,
+  },
+  {
+    path: "/map-view",
+    route: mapViewRoute,
   },
 ];
 

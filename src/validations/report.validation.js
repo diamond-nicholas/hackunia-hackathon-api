@@ -18,7 +18,18 @@ const getReport = {
   body: Joi.object().keys({}),
 };
 
+const updateReports = {
+  headers: Joi.object({
+    token: Joi.string().required(),
+  }),
+  body: Joi.object().keys({
+    reportId: Joi.string().required(),
+    reportStatus: Joi.string().required(),
+  }),
+};
+
 module.exports = {
   createReport,
   getReport,
+  updateReports,
 };
