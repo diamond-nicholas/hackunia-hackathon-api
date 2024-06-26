@@ -17,6 +17,30 @@ const createChat = catchAsync(async (req, res) => {
   }
 });
 
+const addUserToChat = catchAsync(async (req, res) => {
+  try {
+    const chat = await chatService.addUserToChat(req.body, req.user);
+    res.status(httpStatus.OK).send({
+      message: "user added",
+      data: chat,
+    });
+  } catch (error) {
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ error: error.message });
+  }
+});
+
+const getMessages = catchAsync(async (req, res) => {
+  try {
+    const chat = await chatService.getMessages(req.params);
+    res.status(httpStatus.OK).send({
+      message: "",
+      data: chat,
+    });
+  } catch (error) {
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ error: error.message });
+  }
+});
+
 const getAllMyChat = catchAsync(async (req, res) => {
   try {
     const chat = await chatService.getAllMyChat(req.user);
@@ -32,4 +56,6 @@ const getAllMyChat = catchAsync(async (req, res) => {
 module.exports = {
   createChat,
   getAllMyChat,
+  addUserToChat,
+  getMessages,
 };

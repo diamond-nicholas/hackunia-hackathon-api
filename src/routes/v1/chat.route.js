@@ -19,4 +19,18 @@ router.get(
   chatController.getAllMyChat
 );
 
+router.patch(
+  "/",
+  isAuthenticated,
+  validate(chatValidation.addUserToChat),
+  chatController.addUserToChat
+);
+
+router.get(
+  "/:chatId/messages",
+  isAuthenticated,
+  validate(chatValidation.getMessages),
+  chatController.getMessages
+);
+
 module.exports = router;
