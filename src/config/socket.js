@@ -1,19 +1,24 @@
-// const { routePlanning } = require("../controllers/routeplanner.controller");
+const { Server } = require("socket.io");
 
-exports.setupSocket = (io) => {
+const setupSocket = (server) => {
+  const io = new Server(server, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST", "PUT", "PATCH"],
+    },
+  });
+
   io.on("connection", (socket) => {
-    console.log("New client connected");
-
-    // Handle route planning via socket
-    // routePlanning(socket);
+    console.log(`Socket connected: ${socket.id}`);
 
     socket.on("disconnect", () => {
-      console.log("Client disconnected");
+      console.log(`Socket disconnected: ${socket.id}`);
     });
 
-    // Emit updates periodically or based on certain events
-    setInterval(() => {
-      socket.emit("update", { type: "alert", message: "New alien sighting!" });
-    }, 10000);
+    // Additional event handling can be added here
   });
+
+  return io;
 };
+
+module.exports = setupSocket;

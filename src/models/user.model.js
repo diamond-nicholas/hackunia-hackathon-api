@@ -36,6 +36,15 @@ const userSchema = mongoose.Schema(
       },
       private: true,
     },
+    role: {
+      type: String,
+      default: "user",
+      enum: ["user", "admin"],
+    },
+    chat: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Chat",
+    },
   },
   {
     timestamps: true,

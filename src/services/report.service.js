@@ -22,7 +22,6 @@ const createReport = async (reportData, currentUser) => {
 
 const updateReports = async (reportBody, currentUser) => {
   const { reportId, reportStatus } = reportBody;
-  console.log(reportId);
   const report = await Report.findOne({ _id: reportId });
   if (!report) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Report not found");

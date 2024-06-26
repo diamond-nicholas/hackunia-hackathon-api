@@ -5,3 +5,4 @@ module.exports.resourceService = require("./resource.service");
 module.exports.reportService = require("./report.service");
 module.exports.routePlan = require("./routePlan.service");
 module.exports.mapViewService = require("./mapview.service");
+module.exports.chatService = require("./chat.service");

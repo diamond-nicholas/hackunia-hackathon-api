@@ -8,6 +8,12 @@ const logger = require("../config/logger");
 const { dijkstra } = require("../config/dijkstra");
 
 const getDistance = (loc1, loc2) => {
+  if (!Array.isArray(loc1)) {
+    loc1 = [loc1.longitude, loc1.latitude];
+  }
+  if (!Array.isArray(loc2)) {
+    loc2 = [loc2.longitude, loc2.latitude];
+  }
   // Calculate distance between two coordinates
   const [lon1, lat1] = loc1;
   const [lon2, lat2] = loc2;
@@ -44,7 +50,7 @@ const setRoute = async (routeBody, currentUser) => {
     });
     const reports = await Report.find({
       type: "alien_sighting",
-      // status: "verified",
+      status: "verified",
     });
 
     let graph = {
