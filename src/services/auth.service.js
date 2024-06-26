@@ -46,6 +46,10 @@ const getSelf = async (data) => {
   return user;
 };
 
+const getAllUser = async () => {
+  return await User.find({});
+};
+
 const logoutUser = async (refreshToken) => {
   const refreshTokenDoc = await Token.findOne({
     token: refreshToken,
@@ -67,4 +71,5 @@ module.exports = {
   changePassword,
   logoutUser,
   getSelf,
+  getAllUser,
 };

@@ -24,6 +24,13 @@ router.get(
   authController.getSelf
 );
 
+router.get(
+  "/users",
+  isAuthenticated,
+  validate(authValidation.getAllUser),
+  authController.getAllUser
+);
+
 router.post(
   "/change-password",
   isAuthenticated,

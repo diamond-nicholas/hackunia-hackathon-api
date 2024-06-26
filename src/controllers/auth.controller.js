@@ -67,24 +67,32 @@ const changePassword = catchAsync(async (req, res) => {
   });
 });
 
+const getAllUser = catchAsync(async (req, res) => {
+  const result = await authService.getAllUser();
+  res.status(httpStatus.ACCEPTED).send({
+    message: "",
+    data: result,
+  });
+});
+
 const logoutUser = catchAsync(async (req, res) => {
   await authService.logoutUser(req.cookies.refreshToken);
   res.status(httpStatus.OK).json({ message: "Successfully logged out" });
 });
 
-const getAllUser = catchAsync(async (req, res) => {
-  if (!req.headers.authorization) {
-    throw new Error("Token is required");
-  }
-  const [, token] = req.headers.authorization.split(" ");
-  const filter = pick(req.query, ["fullName"]);
-  const options = pick(req.query, ["sortBy", "limit", "page"]);
-  const result = await userService.getAllUser(token, filter, options);
-  res.status(httpStatus.ACCEPTED).send({
-    user: result,
-    message: "Successfully retrieved all users",
-  });
-});
+// const getAllUser = catchAsync(async (req, res) => {
+//   if (!req.headers.authorization) {
+//     throw new Error("Token is required");
+//   }
+//   const [, token] = req.headers.authorization.split(" ");
+//   const filter = pick(req.query, ["fullName"]);
+//   const options = pick(req.query, ["sortBy", "limit", "page"]);
+//   const result = await userService.getAllUser(token, filter, options);
+//   res.status(httpStatus.ACCEPTED).send({
+//     user: result,
+//     message: "Successfully retrieved all users",
+//   });
+// });
 
 module.exports = {
   registerUser,

@@ -23,6 +23,13 @@ const getSelf = {
   body: Joi.object().keys({}),
 };
 
+const getAllUser = {
+  headers: Joi.object({
+    token: Joi.string().required(),
+  }),
+  body: Joi.object().keys({}),
+};
+
 const changePassword = {
   headers: Joi.object({
     token: Joi.string().required(),
@@ -49,4 +56,5 @@ module.export = {
   getSelf,
   changePassword,
   logoutUser,
+  getAllUser,
 };
