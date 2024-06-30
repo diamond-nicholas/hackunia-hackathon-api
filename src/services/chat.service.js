@@ -15,29 +15,57 @@ const createChat = async (chatData, currentUser) => {
   });
   return chat;
 };
-
 const addUserToChat = async (chatData, currentUser) => {
-  const { chatId, userToBeAddedId } = chatData;
+  const { chatId, userToBeAddedId } = chatData; // userToBeAddedId is now an array
 
   const activeChat = await Chat.findOne({ _id: chatId });
   if (!activeChat) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Invalid Chat");
   }
 
-  const isValidUser = await User.findOne({ _id: userToBeAddedId });
-  if (!isValidUser) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Invalid User");
-  }
+  // Validate each user in userToBeAddedId array
+  for (const userId of userToBeAddedId) {
+    const isValidUser = await User.findOne({ _id: userId });
+    if (!isValidUser) {
+      throw new ApiError(httpStatus.BAD_REQUEST, `Invalid User: ${userId}`);
+    }
 
-  if (activeChat.members.includes(userToBeAddedId)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "User already exist");
-  }
+    if (activeChat.members.includes(userId)) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        `User already exists: ${userId}`
+      );
+    }
 
-  activeChat.members.push(userToBeAddedId);
+    activeChat.members.push(userId);
+  }
 
   await activeChat.save();
   return activeChat;
 };
+
+// const addUserToChat = async (chatData, currentUser) => {
+//   const { chatId, userToBeAddedId } = chatData;
+
+//   const activeChat = await Chat.findOne({ _id: chatId });
+//   if (!activeChat) {
+//     throw new ApiError(httpStatus.BAD_REQUEST, "Invalid Chat");
+//   }
+
+//   const isValidUser = await User.findOne({ _id: userToBeAddedId });
+//   if (!isValidUser) {
+//     throw new ApiError(httpStatus.BAD_REQUEST, "Invalid User");
+//   }
+
+//   if (activeChat.members.includes(userToBeAddedId)) {
+//     throw new ApiError(httpStatus.BAD_REQUEST, "User already exist");
+//   }
+
+//   activeChat.members.push(userToBeAddedId);
+
+//   await activeChat.save();
+//   return activeChat;
+// };
 
 const getAllMyChat = async (currentUser) => {
   const groupChats = await Chat.find({

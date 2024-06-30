@@ -23,7 +23,7 @@ const addUserToChat = {
   }),
   body: Joi.object().keys({
     chatId: Joi.string().required(),
-    userToBeAddedId: Joi.string().required(),
+    userToBeAddedId: Joi.array().items().required(),
   }),
 };
 
