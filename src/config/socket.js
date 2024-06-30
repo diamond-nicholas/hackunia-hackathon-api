@@ -25,6 +25,7 @@ const setupSocket = (server) => {
         sender: senderId,
         chat: chatId,
       });
+      //  message = await message.populate("sender",).execPopulate();
       io.to(chatId).emit("receiveMessage", {
         content: message.content,
         sender: message.sender,

@@ -88,9 +88,7 @@ const getMessages = async (messageBody) => {
     throw new ApiError(httpStatus.BAD_REQUEST, "Invalid chat");
   }
 
-  const messages = await Message.find({ chat: chatId })
-    .populate("sender")
-    .sort("createdAt");
+  const messages = await Message.find({ chat: chatId }).sort("createdAt");
   if (!messages) {
     return "No messages";
   }
